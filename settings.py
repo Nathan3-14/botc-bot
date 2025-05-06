@@ -13,3 +13,4 @@ config_data = load_toml("config.toml")
 LOGS_DIR = config_data["logs_dir"]
 load_dotenv(config_data["env_path"])
 token = os.getenv("TOKEN")
+colours = config_data["colours"]

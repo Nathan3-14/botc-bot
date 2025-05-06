@@ -10,6 +10,12 @@ import settings
 from rich.console import Console
 
 console = Console()
+TIME = settings.colours["time"]
+INFO = settings.colours["info"]
+WARNING = settings.colours["warning"]
+ERROR = settings.colours["error"]
+ERROR_TEXT = settings.colours["error_text"]
+IMPORTANT = settings.colours["important"]
 
 
 def log(message: str, type: Literal["info", "warning", "error", "important"]="info") -> None:
@@ -19,16 +25,16 @@ def log(message: str, type: Literal["info", "warning", "error", "important"]="in
     match type:
         case "info":
             log_output = f"{current_time} INFO {message}"
-            text_output = f"[bright_black]{current_time}[/bright_black] [magenta bold]INFO[/magenta bold] {message}"
+            text_output = f"[{TIME}]{current_time}[/{TIME}] [{INFO} bold]INFO[/{INFO} bold] {message}"
         case "warning":
             log_output = f"{current_time} WARNING {message}"
-            text_output = f"[bright_black]{current_time}[/bright_black] [orange3 bold]WARNING[/orange3 bold] {message}"
+            text_output = f"[{TIME}]{current_time}[/{TIME}] [{WARNING} bold]WARNING[/{WARNING} bold] {message}"
         case "error":
             log_output = f"{current_time} ERROR {message}"
-            text_output = f"[bright_black]{current_time}[/bright_black] [red bold]ERROR[/red bold] [dark_red bold]{message}[/dark_red bold]"
+            text_output = f"[{TIME}]{current_time}[/{TIME}] [{ERROR} bold]ERROR[/{ERROR} bold] [{ERROR_TEXT} bold]{message}[/{ERROR_TEXT} bold]"
         case "important":
             log_output = f"{current_time} IMPORTANT {message}"
-            text_output = f"[bright_black]{current_time}[/bright_black] [blue1 bold]IMPORTANT[/blue1 bold] [bold]{message}[/bold]"
+            text_output = f"[{TIME}]{current_time}[/{TIME}] [{IMPORTANT} bold]IMPORTANT[/{IMPORTANT} bold] [bold]{message}[/bold]"
     
     console.print(text_output)
     with open(f"{settings.LOGS_DIR}/{current_date}.log", "a") as f:

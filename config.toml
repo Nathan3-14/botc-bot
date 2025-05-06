@@ -6,7 +6,9 @@ MissingRequiredArgument = "Missing required argument"
 CommandNotFound = "Invalid command name. Please use ?help for list of commands"
 
 [colours]
-info = "#000000"
-warning = "#00FF00"
-error = "#FF0000"
+info = "#FF00FF"
+warning = "#FFAF00"
+error = "#800000"
+error_text = "#FF0000"
 important = "#0000FF"
+time = "#808080"
