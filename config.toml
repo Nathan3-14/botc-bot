@@ -4,3 +4,9 @@ logs_dir = "logs"
 [error_messages]
 MissingRequiredArgument = "Missing required argument"
 CommandNotFound = "Invalid command name. Please use ?help for list of commands"
+
+[colours]
+info = "#000000"
+warning = "#00FF00"
+error = "#FF0000"
+important = "#0000FF"

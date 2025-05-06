@@ -40,11 +40,25 @@ def main() -> None:
     intents = discord.Intents.default()
     intents.message_content = True
     
-    bot = commands.Bot(command_prefix="!", intents=intents)
+    bot = commands.Bot(command_prefix="?", intents=intents)
     
     @bot.event
     async def on_ready():
         log("Bot Logged in Successfully")
+    
+    @bot.command()
+    async def sync(ctx: CTX) -> None:
+        guild = discord.Object(id=1342227524129652780)
+        ctx.bot.tree.copy_global_to(guild=guild)
+        await ctx.bot.tree.sync(guild=guild)
+
+        log("Synced slash commands", "important")
+        await ctx.send("Sync Successful!")
+    
+    @bot.hybrid_command()
+    async def ping(interaction: CTX):
+        await interaction.send("Pong!")
+    
     
     if settings.token is None:
         log("No bot token provided", "error")
@@ -57,5 +71,13 @@ if __name__ == "__main__":
     # log("Warn test?", "warning")
     # log("err :(", "error")
     # log("SUPER IMPORTANT THING", "important")
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        log("Shutting down bot...")
+        log("Goodbye! :)", "important")
+        log("")
+        
 
