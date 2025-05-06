@@ -1,6 +1,6 @@
+env_path = ".env"
+logs_dir = "logs"
+
 [error_messages]
 MissingRequiredArgument = "Missing required argument"
 CommandNotFound = "Invalid command name. Please use ?help for list of commands"
-
-env_path = ".env"
-logs_dir = "logs"
