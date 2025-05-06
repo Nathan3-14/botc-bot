@@ -30,4 +30,4 @@ async def ping(ctx: commands.Context) -> None:  # This is a hybrid command, it c
 # async def ciao(interaction: discord.Interaction):
 #     await interaction.response.send_message(f"Ciao! {interaction.user.mention}", ephemeral=True)
     
-bot.run("MTM2ODg2NzEwNTQ0MDY2NTcwMA.Gde941.hjLGGefvLl3dkBOm-OSLC0PmNOxg9ewplFmOug")
+bot.run("*****")
