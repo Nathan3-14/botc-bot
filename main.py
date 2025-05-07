@@ -18,6 +18,25 @@ ERROR_TEXT = settings.colours["error_text"]
 IMPORTANT = settings.colours["important"]
 
 
+class ST_UI(discord.ui.View):
+    def __init__(self, town_square: discord.VoiceChannel) -> None:
+        self.town_square = town_square
+        super().__init__()
+    
+    # @discord.ui.button(label="Click Me!", style=discord.ButtonStyle.primary)
+    # async def click_me(self, interaction: discord.Interaction, button: discord.ui.Button):
+    #     await interaction.response.send_message("You clicked the button!", ephemeral=True)
+    @discord.ui.button(label="Night")
+    async def night(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_message("Moving people to cottages", ephemeral=True)
+        await interaction.channel.send("Everyone goes to sleep...") #type:ignore
+        log("Night Started")
+        log("Moving players")
+        for index, user in enumerate(self.town_square.members):
+            user.move_to() #get correct cottage based on roles
+        # await interaction.response.send_message("Everyone goes to sleep...")
+
+
 def log(message: str, type: Literal["info", "warning", "error", "important"]="info") -> None:
     now = datetime.datetime.now()
     current_time = now.strftime("%H:%M:%S")
@@ -57,13 +76,18 @@ def main() -> None:
         guild = discord.Object(id=1342227524129652780)
         ctx.bot.tree.copy_global_to(guild=guild)
         await ctx.bot.tree.sync(guild=guild)
-
+        
         log("Synced slash commands", "important")
         await ctx.send("Sync Successful!")
     
+    # @bot.hybrid_command()
+    # async def ping(interaction: CTX):
+    #     await interaction.send("Pong!")
+    
     @bot.hybrid_command()
-    async def ping(interaction: CTX):
-        await interaction.send("Pong!")
+    async def st_ui(interaction: CTX, town_square: discord.VoiceChannel):
+        view = ST_UI(town_square=town_square)
+        await interaction.send("ST Controls", view=view)
     
     
     if settings.token is None:
@@ -73,10 +97,6 @@ def main() -> None:
     bot.run(settings.token)
 
 if __name__ == "__main__":
-    # log("Hello!")
-    # log("Warn test?", "warning")
-    # log("err :(", "error")
-    # log("SUPER IMPORTANT THING", "important")
     try:
         main()
     except KeyboardInterrupt:
@@ -85,5 +105,3 @@ if __name__ == "__main__":
         log("Shutting down bot...")
         log("Goodbye! :)", "important")
         log("")
-        
-
